@@ -1,15 +1,15 @@
-name: PATH_FILTERED_SHOULD_NOT_RUN
+name: INVALID_LOCKFILE_PATH_FILTERED_SENTINEL
 
 on:
   push:
     paths:
-      - "nonexistent-path/**"
+      - only-this-path-matches/**
   pull_request:
     paths:
-      - "nonexistent-path/**"
+      - only-this-path-matches/**
 
 jobs:
   should-not-start:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "THIS_SHOULD_NOT_RUN_PATH_FILTERED"
+      - run: echo "PATH_FILTERED_WORKFLOW_SHOULD_NOT_RUN"
