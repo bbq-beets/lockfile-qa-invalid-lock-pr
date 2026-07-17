@@ -1,6 +1,6 @@
-# Valid baseline. The demo pull request changes dependencies to a list.
-version: "v0.0.1"
+# Valid baseline. The event fixture replaces this file on its unique head branch.
+version: 'v0.0.1'
 workflows:
-  ".github/workflows/invalid-lockfile.yml": []
-  ".github/workflows/path-filtered.yml": []
+  '.github/workflows/invalid-lockfile.yml': []
+  '.github/workflows/path-filtered.yml': []
 dependencies: {}
