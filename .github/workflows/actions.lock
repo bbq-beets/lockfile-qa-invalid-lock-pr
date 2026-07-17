@@ -1,6 +1,6 @@
-# Valid baseline. The event fixture replaces this file on its unique head branch.
+# Deliberately schema-invalid but valid YAML: dependencies must be a mapping.
 version: 'v0.0.1'
 workflows:
   '.github/workflows/invalid-lockfile.yml': []
   '.github/workflows/path-filtered.yml': []
-dependencies: {}
+dependencies: []
