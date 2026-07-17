@@ -1,0 +1,58 @@
+name: lockfile QA PR check observer
+run-name: lockfile QA PR check observer / ${{ inputs.run_id }}
+
+# Persistent harness infrastructure, ensured on the corruption host's DEFAULT
+# branch by script/dispatch-and-evaluate. workflow_dispatch triggers are only
+# registered from the default branch, and this observer must run against a VALID
+# lockfile (the fixture head branch's lockfile is deliberately invalid, which
+# would itself startup_failure), so it is dispatched with --ref <default_branch>.
+#
+# It exists because QA_CROSS_REPO_TOKEN has actions:read but NOT checks:read, so
+# the PR check-suite identity can't be read cross-repo. This workflow runs with
+# the target repo's own GITHUB_TOKEN (which can read checks) and asserts that the
+# invalid-lockfile run is a PR-associated check suite with zero job check-runs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        required: true
+        type: string
+      target_run_id:
+        required: true
+        type: string
+      pull_request_number:
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  pull-requests: read
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify the startup failure is a PR check suite with zero job checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_RUN_ID: ${{ inputs.target_run_id }}
+          PULL_REQUEST_NUMBER: ${{ inputs.pull_request_number }}
+        run: |
+          set -euo pipefail
+          run="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${TARGET_RUN_ID}")"
+          suite_id="$(jq -r '.check_suite_id' <<<"$run")"
+          suite="$(gh api "repos/${GITHUB_REPOSITORY}/check-suites/${suite_id}")"
+          check_runs="$(gh api "repos/${GITHUB_REPOSITORY}/check-suites/${suite_id}/check-runs")"
+
+          associated="$(jq -r --argjson number "$PULL_REQUEST_NUMBER" \
+            'any(.pull_requests[]?; .number == $number)' <<<"$suite")"
+          check_run_count="$(jq -r '.total_count' <<<"$check_runs")"
+
+          echo "PR_CHECK_SUITE_ASSOCIATED=${associated}"
+          echo "PR_CHECK_RUN_COUNT=${check_run_count}"
+
+          [[ "$associated" == "true" ]]
+          [[ "$check_run_count" == "0" ]]
