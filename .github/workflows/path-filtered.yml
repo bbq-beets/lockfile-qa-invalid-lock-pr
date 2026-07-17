@@ -1,0 +1,15 @@
+name: PATH_FILTERED_SHOULD_NOT_RUN
+
+on:
+  push:
+    paths:
+      - "nonexistent-path/**"
+  pull_request:
+    paths:
+      - "nonexistent-path/**"
+
+jobs:
+  should-not-start:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "THIS_SHOULD_NOT_RUN_PATH_FILTERED"

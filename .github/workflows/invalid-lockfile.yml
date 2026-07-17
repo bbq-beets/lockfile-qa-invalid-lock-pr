@@ -1,0 +1,11 @@
+name: INVALID_LOCKFILE_STARTUP_FAILURE
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  should-not-start:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "THIS_SHOULD_NOT_RUN_INVALID_LOCKFILE"
