@@ -1,7 +1,7 @@
-name: Exact tag history base
+name: Exact tag history forward
 description: Inert QA-owned exact-tag containment sentinel.
 runs:
   using: composite
   steps:
     - shell: bash
-      run: printf '%s\n' EXACT_TAG_HISTORY_PINNED_A_EXECUTED
+      run: printf '%s\n' EXACT_TAG_HISTORY_FORWARD_B_EXECUTED
