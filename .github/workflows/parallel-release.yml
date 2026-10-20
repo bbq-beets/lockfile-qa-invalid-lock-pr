@@ -1,0 +1,20 @@
+name: parallel-release
+on:
+  push:
+    branches: ['qa/parallel-release/**']
+permissions:
+  contents: read
+jobs:
+  sentinels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Normal remote action
+        uses: bbq-beets/lockfile-qa-gated-public-origin/actions/parallel-release/normal@qa-parallel-release-normal-v1
+      - parallel:
+          - name: Parallel direct remote action
+            uses: bbq-beets/lockfile-qa-gated-public-origin/actions/parallel-release/direct@qa-parallel-release-direct-v1
+          - name: Parallel remote composite
+            uses: bbq-beets/lockfile-qa-gated-public-origin/actions/parallel-release/composite@qa-parallel-release-composite-v1
+      - name: Join
+        run: printf '%s\n' PARALLEL_RELEASE_JOIN_EXECUTED
