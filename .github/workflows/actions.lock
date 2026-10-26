@@ -1,0 +1,11 @@
+# Deliberately pinned before the exact tag moved from A to descendant B.
+version: v0.0.3
+workflows:
+  .github/workflows/exact-tag-history.yml:
+    - bbq-beets/lockfile-qa-invalid-lock-pr@v0.186.100
+dependencies:
+  bbq-beets/lockfile-qa-invalid-lock-pr@v0.186.100:
+    ref: v0.186.100
+    commit: sha1-e4512986b593ae47afa330b59ef854336e540f01
+    owner_id: 33435682
+    repo_id: 1304305466
