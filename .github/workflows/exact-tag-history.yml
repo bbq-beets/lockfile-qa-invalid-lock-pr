@@ -1,0 +1,12 @@
+name: exact-tag-history
+on:
+  push:
+    branches: ['qa/exact-tag-history/**']
+permissions:
+  contents: read
+jobs:
+  sentinel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: bbq-beets/lockfile-qa-invalid-lock-pr@v0.186.101
