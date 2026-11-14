@@ -1,0 +1,17 @@
+name: LOCKFILE_FAIL_OPEN_DUPLICATE_KEY
+
+# Lockfile QA fail-open/fail-closed fixture (github/launch#12303,
+# actions_lockfile_fail_closed). The head branch replaces actions.lock with an
+# unreadable one. Flag off, Launch skips enforcement and this job runs; flag on,
+# the run is a permanent startup_failure naming the lockfile.
+on:
+  push:
+    branches:
+      - 'qa/lockfile-fail-open-duplicate-key/**'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.3.1
+      - run: echo "LOCKFILE_FAIL_OPEN_DUPLICATE_KEY_RAN"
