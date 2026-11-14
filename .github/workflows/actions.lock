@@ -1,6 +1,13 @@
 # Valid baseline. The event fixture replaces this file on its unique head branch.
-version: 'v0.0.1'
+version: 'v0.0.2'
 workflows:
-  '.github/workflows/invalid-lockfile.yml': []
-  '.github/workflows/path-filtered.yml': []
-dependencies: {}
+    '.github/workflows/invalid-lockfile.yml': []
+    '.github/workflows/path-filtered.yml': []
+    '.github/workflows/lockfile-fail-open-invalid-yaml.yml':
+        - 'actions/checkout@v4.3.1'
+dependencies:
+    'actions/checkout@v4.3.1':
+        ref: 'v4.3.1'
+        commit: 'sha1-34e114876b0b11c390a56381ad16ebd13914f8d5'
+        owner_id: 44036562
+        repo_id: 197814629
