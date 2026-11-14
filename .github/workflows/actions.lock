@@ -1,10 +1,10 @@
-# Valid baseline. The event fixture replaces this file on its unique head branch.
+# Deliberately unreadable: an unclosed quote makes this invalid YAML.
 version: 'v0.0.2'
 workflows:
     '.github/workflows/invalid-lockfile.yml': []
     '.github/workflows/path-filtered.yml': []
     '.github/workflows/lockfile-fail-open-invalid-yaml.yml':
-        - 'actions/checkout@v4.3.1'
+        - 'actions/checkout@v4.3.1
 dependencies:
     'actions/checkout@v4.3.1':
         ref: 'v4.3.1'
